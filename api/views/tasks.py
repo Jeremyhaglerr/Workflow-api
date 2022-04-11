@@ -21,3 +21,9 @@ def create():
 def index():
   tasks = Task.query.all()
   return jsonify([task.serialize() for task in tasks]), 200
+
+@tasks.route('/<id>', methods=["GET"])
+def show(id):
+  task = Task.query.filter_by(id=id).first()
+  task_data = task.serialize()
+  return jsonify(cat=task_data), 200
