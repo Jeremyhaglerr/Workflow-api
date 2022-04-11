@@ -17,3 +17,7 @@ def create():
   db.session.commit()
   return jsonify(task.serialize()), 201
 
+@tasks.route('/', methods=["GET"])
+def index():
+  tasks = Task.query.all()
+  return jsonify([task.serialize() for task in tasks]), 200
