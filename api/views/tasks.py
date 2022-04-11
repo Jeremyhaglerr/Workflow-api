@@ -27,3 +27,19 @@ def show(id):
   task = Task.query.filter_by(id=id).first()
   task_data = task.serialize()
   return jsonify(cat=task_data), 200
+
+@tasks.route('/<id>', methods=["PUT"]) 
+@login_required
+def update(id):
+  data = request.get_json()
+  profile = read_token(request)
+  task = Task.query.filter_by(id=id).first()
+
+  if task.profile_id != profile["id"]:
+    return 'Forbidden', 403
+
+  for key in data:
+    setattr(task, key, data[key])
+
+  db.session.commit()
+  return jsonify(task.serialize()), 200
