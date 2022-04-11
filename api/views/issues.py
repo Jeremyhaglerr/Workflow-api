@@ -17,3 +17,13 @@ def create():
   db.session.add(issue)
   db.session.commit()
   return jsonify(issue.serialize()), 201
+
+@issues.route('/', methods=["GET"])
+def index():
+  issues = Issue.query.all()
+  return jsonify([issue.serialize() for issue in issues]), 201
+
+@issues.route('/<id>', methods=["GET"])
+def show(id):
+  issue = Issue.query.filter_by(id=id).first()
+  return jsonify(issue.serialize()), 200
