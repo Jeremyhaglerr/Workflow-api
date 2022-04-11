@@ -43,3 +43,16 @@ def update(id):
 
   db.session.commit()
   return jsonify(task.serialize()), 200
+
+@tasks.route('/<id>', methods=["DELETE"]) 
+@login_required
+def delete(id):
+  profile = read_token(request)
+  task = Task.query.filter_by(id=id).first()
+
+  if task.profile_id != profile["id"]:
+    return 'Forbidden', 403
+
+  db.session.delete(task)
+  db.session.commit()
+  return jsonify(message="Success"), 200
