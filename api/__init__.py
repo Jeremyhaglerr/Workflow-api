@@ -8,10 +8,12 @@ from config import Config
 from api.models.user import User
 from api.models.profile import Profile
 from api.models.task import Task
+from api.models.issue import Issue
 
 # ============ Import Views ============
 from api.views.auth import auth
 from api.views.tasks import tasks
+from api.views.issues import issues
 
 cors = CORS()
 migrate = Migrate() 
@@ -28,6 +30,7 @@ def create_app(config):
   # ============ Register Blueprints ============
   app.register_blueprint(auth, url_prefix='/api/auth') 
   app.register_blueprint(tasks, url_prefix='/api/tasks')
+  app.register_blueprint(issues, url_prefix='/api/issues')
 
   return app
 
