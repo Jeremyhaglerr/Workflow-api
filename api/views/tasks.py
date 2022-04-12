@@ -26,7 +26,7 @@ def index():
 def show(id):
   task = Task.query.filter_by(id=id).first()
   task_data = task.serialize()
-  return jsonify(cat=task_data), 200
+  return jsonify(task=task_data), 200
 
 @tasks.route('/<id>', methods=["PUT"]) 
 @login_required

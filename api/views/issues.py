@@ -26,7 +26,8 @@ def index():
 @issues.route('/<id>', methods=["GET"])
 def show(id):
   issue = Issue.query.filter_by(id=id).first()
-  return jsonify(issue.serialize()), 200
+  issue_data = issue.serialize()
+  return jsonify(issue=issue_data), 200
 
 @issues.route('/<id>', methods=["PUT"]) 
 @login_required
